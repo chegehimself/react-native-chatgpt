@@ -58,7 +58,8 @@ export const createGlobalFunctionsInWebviewContext = () => {
       messageId,
       newMessageId,
       conversationId,
-      timeout
+      timeout,
+      model
     }) => {
 
       async function* streamAsyncIterable(stream) {
@@ -103,7 +104,7 @@ export const createGlobalFunctionsInWebviewContext = () => {
             },
           },
         ],
-        model: "text-davinci-002-render",
+        model: model,
         parent_message_id: messageId,
       };
 
@@ -161,6 +162,7 @@ export function postStreamedMessage({
   messageId = uuid.v4() as string,
   conversationId,
   timeout = STREAMED_REQUEST_DEFAULT_TIMEOUT,
+  model = `text-davinci-002-render`,
 }: SendMessageParams) {
   const newMessageId = uuid.v4() as string;
   let script = '';
@@ -172,7 +174,8 @@ export function postStreamedMessage({
         messageId: "${messageId}",
         newMessageId: "${newMessageId}",
         conversationId: "${conversationId}",
-        timeout: ${timeout}
+        timeout: ${timeout},
+        model: "${model}"
       });
 
       true;
@@ -184,7 +187,8 @@ export function postStreamedMessage({
         message: "${message}",
         messageId: "${messageId}",
         newMessageId: "${newMessageId}",
-        timeout: ${timeout}
+        timeout: ${timeout},
+        model: "${model}"
       });
 
       true;
@@ -204,6 +208,7 @@ export async function postMessage({
   conversationId,
   timeout = REQUEST_DEFAULT_TIMEOUT,
   onTokenExpired,
+  model = 'text-davinci-002-render',
 }: SendMessageParams): Promise<ChatGptResponse> {
   const controller = new AbortController();
   const newMessageId = uuid.v4() as string;
@@ -230,7 +235,7 @@ export async function postMessage({
         },
       },
     ],
-    model: 'text-davinci-002-render',
+    model,
     parent_message_id: messageId,
   };
 

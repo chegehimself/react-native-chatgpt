@@ -68,6 +68,7 @@ export default function ChatGpt({
         message,
         conversationId: options?.conversationId,
         messageId: options?.messageId,
+        model: options?.model,
         timeout: requestTimeout,
         onTokenExpired: () => setAccessToken(''),
       });
@@ -91,6 +92,7 @@ export default function ChatGpt({
       conversationId: options?.conversationId,
       messageId: options?.messageId,
       timeout: streamedRequestTimeout,
+      model: options?.model,
     });
   }
 

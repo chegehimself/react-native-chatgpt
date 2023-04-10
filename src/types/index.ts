@@ -20,12 +20,14 @@ export interface StreamMessageParams {
 export type SendMessageOptions = {
   conversationId?: string;
   messageId?: string;
+  model?: string;
 };
 
 export interface SendMessageParams extends SendMessageOptions {
   message: string;
   accessToken: string;
   timeout?: number;
+  model?: string;
   onTokenExpired?: () => void;
 }
 
