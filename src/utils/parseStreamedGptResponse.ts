@@ -39,5 +39,6 @@ export default function parseStreamedGptResponse(data: string) {
     messageId: response.message.id,
     conversationId: response.conversation_id,
     isDone: response.message?.end_turn === true,
+    modelSlug: response?.message?.metadata?.model_slug,
   };
 }
